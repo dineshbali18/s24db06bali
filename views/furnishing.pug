@@ -2,12 +2,12 @@ extends layout
 
 block content
   h1= title
-  - let results = [{ material: "Wood", style: "Vintage", price: 100 },{ material: "Metal", style: "Modern", price: 150 },{ material: "Glass", style: "Art Deco", price: 200 }]
+  - let results1= results
   div(class="container-fluid")
     div(class="row")
-      each item, index in results  
+      each item, index in results1  
         div(class="col-sm-2",onclick=`buy(${index})`)
-          p #{item.material}
+          p #{item.material_type}
           p #{item.style}
           p #{item.price}
   script.
