@@ -10,6 +10,10 @@ block content
           p #{item.material_type}
           p #{item.style}
           p #{item.price}
+          //- button(type="button" onclick="inspect('#{item._id}')") Inspect
+          //- button(type="button" onclick="update('#{item._id}')") Update
+          //- button(type="button" onclick="remove('#{item._id}')") Delete
+    //- button(type="button" onclick="addNew()") Add New Furniture
   script.
     function buy(index) {
     alert("You purchased item " + index);}

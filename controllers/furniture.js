@@ -4,8 +4,13 @@ exports.furniture_list = function(req, res) {
  res.send('NOT IMPLEMENTED: furniture list');
 };
 // for a specific furniture.
-exports.furniture_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: furniture detail: ' + req.params.id);
+exports.furniture_detail = async function(req, res) {
+    try {
+        const furniture = await Furniture.findById(req.params.id);
+        res.render('furniture', { title: 'Furniture Details', furniture: furniture });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 // Handle furniture create on POST.
 exports.furniture_create_post = async function(req, res) {
@@ -29,12 +34,22 @@ exports.furniture_create_post = async function(req, res) {
     };
     
 // Handle furniture delete from on DELETE.
-exports.furniture_delete = function(req, res) {
- res.send('NOT IMPLEMENTED: furniture delete DELETE ' + req.params.id);
+exports.furniture_delete = async function(req, res) {
+    try {
+        await Furniture.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Furniture item deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 // Handle furniture update form on PUT.
-exports.furniture_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: furniture update PUT' + req.params.id);
+exports.furniture_update_put = async function(req, res) {
+    try {
+        await Furniture.findByIdAndUpdate(req.params.id, req.body);
+        res.json({ message: 'Furniture item updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 // List of all Furnitures

@@ -28,6 +28,22 @@ async function recreateDB(){
   ).catch(err=>{
   console.error(err)
   });
+  let instance2 = new
+  Furniture({material_type:"metal", style:'Modern',
+ price:1500});
+  instance2.save().then(doc=>{
+  console.log("Second object saved")}
+  ).catch(err=>{
+  console.error(err)
+  });
+  let instance3 = new
+  Furniture({material_type:"glass", style:'Art Deco',
+ price:2000});
+  instance3.save().then(doc=>{
+  console.log("Third object saved")}
+  ).catch(err=>{
+  console.error(err)
+  });
  }
  let reseed = true;
  if (reseed) {recreateDB();}
