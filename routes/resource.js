@@ -18,5 +18,7 @@ router.get('/furnitures/:id', furniture_controller.furniture_detail);
 // GET request for list of all furniture items.
 router.get('/furnitures', furniture_controller.furniture_list);
 
+router.get('/furnitures/:id',furniture_controller.furniture_detail);
+
 
 module.exports = router;

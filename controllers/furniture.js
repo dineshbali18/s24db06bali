@@ -5,11 +5,14 @@ exports.furniture_list = function(req, res) {
 };
 // for a specific furniture.
 exports.furniture_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
     try {
-        const furniture = await Furniture.findById(req.params.id);
-        res.render('furniture', { title: 'Furniture Details', furniture: furniture });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    result = await furniture.findById( req.params.id).exec()
+    console.log(result);
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
     }
 };
 // Handle furniture create on POST.
@@ -44,11 +47,21 @@ exports.furniture_delete = async function(req, res) {
 };
 // Handle furniture update form on PUT.
 exports.furniture_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
     try {
-        await Furniture.findByIdAndUpdate(req.params.id, req.body);
-        res.json({ message: 'Furniture item updated successfully' });
+        let toUpdate = await furniture.findById( req.params.id).exec()
+        // Do updates of properties
+        if(req.body.material_type)
+        toUpdate.material_type = req.body.material_type;
+        if(req.body.price) toUpdate.price = req.body.price;
+        if(req.body.style) toUpdate.style = req.body.style;
+        let result = await toUpdate.save()  ;
+        console.log("Sucess " + result)
+        res.send(result)
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
+        failed`);
     }
 };
 
@@ -69,7 +82,6 @@ exports.furniture_list = async function(req, res) {
     exports.furniture_view_all_Page = async function(req, res) {
     try{
     thefurnitures = await furniture.find();
-    console.log('aaaaaaaaaaaaaa',thefurnitures)
     res.render('furnishing', { title: 'furniture Search Results', results: thefurnitures });
     }
     catch(err){
