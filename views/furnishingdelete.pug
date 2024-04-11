@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  h1= title
+  if toShow == null
+    h2 No instance to delete
+  else
+  - let furnishingid = toShow._id
+  - let material_type = toShow.material_type
+  - let furnishingstyle = toShow.style
+  - let furnishingprice = toShow.price
+  - let actionid = "/resource/furnitures/" + furnishingid
+
+    script.
+      let actionid = "#{actionid}";
+
+    div
+      div.row
+        div.furnishingsAttr.mr-3 Furniture ID is:
+        div #{furnishingid}
+      div.row
+        div.furnishingsAttr.mr-3 Furnishing Type is:
+        div #{material_type}
+      div.row
+        div.furnishingsAttr.mr-3 Furniture Style is:
+        div #{furnishingstyle}
+      div.row
+        div.furnishingsAttr.mr-3 Furniture Price is:
+        div #{furnishingprice}
+      
+      button.btn.btn-danger.m-2(onclick="deleteOnid()") Delete
+      button.btn.btn-secondary.m-2(onclick="cancel()") Cancel
+
+    script.
+      function cancel() {
+        // Go back to the home page for the Furniture collection
+        window.location.href = '/Furniture';
+      }
+
+      function deleteOnid() {
+        console.log("starting delete");
+        // delete first
+        fetch(actionid, {
+          method: 'DELETE' // Don't need a body for the delete
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Delete succeeded");
+          window.location.href = '/Furniture';
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Delete failed: " + error);
+        });
+      }

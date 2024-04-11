@@ -1,0 +1,43 @@
+extends layout
+ 
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+  - let furnishingid = toShow._id
+  - let material_type = toShow.material_type
+  - let furnishingstyle = toShow.style
+  - let furnishingprice = toShow.price
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{costumeid}
+  - let actionid = "/resource/furnitures/" + furnishingid
+  form(id='furnishingsForm', action= actionid, method="PUT")
+    div.form-group
+      label.furnishingsAttr(for='material_type') furnishings material type
+      input#material_type(type='text', name='material_type', value= material_type )
+    div.form-group
+      label.furnishingsAttr(for='style') furnishings style
+      input#style(type='text', name='style', value= furnishingstyle )
+    div.form-group
+      label.furnishingsAttr(for='price') furnishing price
+      input#price(type='number', name='price', value= furnishingprice )
+    input(type="submit")
+  script.
+    document.forms['furnishingsForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });

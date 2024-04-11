@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+  - let furnishingid = toShow._id
+  - let furnishing_type = toShow.material_type
+  - let furnishingstyle = toShow.style
+  - let furnishingcost = toShow.price
+  div
+    div.row
+      div(class='costumeAttr mr-3') furnishing ID is:
+      div #{furnishingid}
+    div.row
+      div(class='costumeAttr mr-3') furnishing Type is:
+      div #{furnishing_type}
+    div.row
+      div(class='costumeAttr mr-3') furnishing Style is:
+      div #{furnishingstyle}
+    div.row
+      div(class='costumeAttr mr-3') furnishing Cost is:
+      div #{furnishingcost}
