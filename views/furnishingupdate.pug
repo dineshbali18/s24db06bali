@@ -11,19 +11,19 @@ block content
   - let furnishingprice = toShow.price
   div.row(class='mb-2')
     div.mr-1 ID is
-    div #{costumeid}
+    div #{furnishingid}
   - let actionid = "/resource/furnitures/" + furnishingid
-  form(id='furnishingsForm', action= actionid, method="PUT")
-    div.form-group
+  form(id='furnishingsForm', action= actionid, method="PUT",style="display:flex; flex-direction:column; border-radius:50px; ")
+    div.form-group(style="color: black;")
       label.furnishingsAttr(for='material_type') furnishings material type
       input#material_type(type='text', name='material_type', value= material_type )
-    div.form-group
+    div.form-group(style="color: black;")
       label.furnishingsAttr(for='style') furnishings style
       input#style(type='text', name='style', value= furnishingstyle )
-    div.form-group
+    div.form-group(style="color: black;")
       label.furnishingsAttr(for='price') furnishing price
       input#price(type='number', name='price', value= furnishingprice )
-    input(type="submit")
+    input(type="submit")(style="color: black;width:24%")
   script.
     document.forms['furnishingsForm'].addEventListener('submit', (event) => {
       event.preventDefault();

@@ -2,17 +2,17 @@ extends layout
 
 block content
   h1= title
-  form(id='furnishingForm', action="/resource/furnitures", method="POST")
-    div.form-group(style="color: black; background-color: orange")
+  form(id='furnishingForm', action="/resource/furnitures", method="POST", style="display:flex; flex-direction:column; border-radius:50px;  ")
+    div.form-group(style="color: black; ")
       label.furnishingAttr(for='material_type') furnishing location 
       input#material_type(type='text', name='material_type')
-    div.form-group(style="color: black; background-color: orange")
+    div.form-group(style="color: black;")
       label.furnishingAttr(for='style') furnishing Style
       input#style(type='text', name='style')
-    div.form-group(style="color: black; background-color: orange")
+    div.form-group(style="color: black;")
       label.furnishingAttr(for='price') furnishing price
       input#price(type='number', name='price')
-    input(type="submit")(style="color: black; background-color: orange")
+    input(type="submit")(style="color: black;width:24%")
     
   script.
     document.forms['furnishingForm'].addEventListener('submit', (event) => {
