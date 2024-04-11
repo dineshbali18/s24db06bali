@@ -2,35 +2,35 @@ extends layout
 
 block content
   h1= title
-  form(id='furnishingForm', action="/resource/furnitures", method="POST", style="display:flex; flex-direction:column; border-radius:50px;  ")
-    div.form-group(style="color: black; ")
-      label.furnishingAttr(for='material_type') furnishing location 
-      input#material_type(type='text', name='material_type')
-    div.form-group(style="color: black;")
-      label.furnishingAttr(for='style') furnishing Style
-      input#style(type='text', name='style')
-    div.form-group(style="color: black;")
-      label.furnishingAttr(for='price') furnishing price
-      input#price(type='number', name='price')
-    input(type="submit")(style="color: black;width:24%")
+  div(style="display: flex; justify-content: center;") 
+    form(id='furnishingForm', action="/resource/furnitures", method="POST", style="display: flex; flex-direction: column; border-radius: 20px; padding: 20px; width: 50%; max-width: 400px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);")
+      div.form-group(style="color: black;border-radius: 20px,")
+        label.furnishingAttr(for='material_type') Furnishing Location
+        input#material_type(type='text', name='material_type')
+      div.form-group(style="color: black;border-radius: 20px")
+        label.furnishingAttr(for='style') Furnishing Style
+        input#style(type='text', name='style')
+      div.form-group(style="color: black;border-radius: 20px")
+        label.furnishingAttr(for='price') Furnishing Price
+        input#price(type='number', name='price')
+      input(type="submit", value="Submit", style="color: black; width: 100%; padding: 10px; margin-top: 20px; background-color: orange; border: none; border-radius: 5px; cursor: pointer;")
     
   script.
     document.forms['furnishingForm'].addEventListener('submit', (event) => {
       event.preventDefault();
-      // TODO do something here to show user that form is being submitted
+      // TODO: Show user that form is being submitted
       fetch(event.target.action, {
         method: 'POST',
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        body: new URLSearchParams(new FormData(event.target))
       })
       .then((resp) => {
-        return resp.json(); // or resp.text() or whatever the server sends
+        return resp.json();
       })
       .then((body) => {
         alert("Save succeeded");
-        // TODO handle body
+        // TODO: Handle response body
       })
       .catch((error) => {
-        // TODO handle error
         alert("Save failed: " + error);
       });
     });
