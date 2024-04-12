@@ -2,9 +2,9 @@ extends layout
 
 block content
   h1= title
-  div(style="display: flex; justify-content: center;") 
+  di(style="display: flex; justify-content: center;") 
     form(id='furnishingForm', action="/resource/furnitures", method="POST", style="display: flex; flex-direction: column; border-radius: 20px; padding: 20px; width: 50%; max-width: 400px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);")
-      div.form-group(style="color: black;border-radius: 20px,")
+      div.form-group(style="color: black;border-radius: 20px")
         label.furnishingAttr(for='material_type') Furnishing Location
         input#material_type(type='text', name='material_type')
       div.form-group(style="color: black;border-radius: 20px")

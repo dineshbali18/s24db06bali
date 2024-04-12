@@ -4,6 +4,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy
+
+var Account =require('./models/account');
+
 mongoose = require('mongoose');
 
 var Furniture = require('./models/furniture')
@@ -14,6 +19,7 @@ var furnishingRouter = require('./routes/furnishing');
 var gridRouter = require("./routes/grid");
 var pickRouter = require('./routes/pick');
 var resourceRouter = require('./routes/resource');
+
 
 // We can seed the collection if needed on
 //server start
@@ -59,6 +65,26 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once("open", function(){
 console.log("Connection to DB succeeded")});
 
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+  Account.findOne({ username: username })
+  .then(function (user){
+  if (err) { return done(err); }
+  if (!user) {
+  return done(null, false, { message: 'Incorrect username.' });
+  }
+  if (!user.validPassword(password)) {
+  return done(null, false, { message: 'Incorrect password.' });
+  }
+  return done(null, user);
+  })
+  .catch(function(err){
+  return done(err)
+  })
+  })
+)
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -68,6 +94,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -75,6 +108,10 @@ app.use('/furnitures',furnishingRouter);
 app.use('/grid',gridRouter);
 app.use('/pick',pickRouter);
 app.use('/resource',resourceRouter);
+
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

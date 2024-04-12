@@ -4,16 +4,19 @@ block content
   h1= title
   - let results1= results
   div(class="container-fluid")
-    div(class="row")
+    div(class="row m-1")
       each item, index in results1  
+        - let destination = `dispatch(\"/furnitures/update?id=${item._id}\")`
         div(class="col-sm-2",onclick=`buy(${index})`)
           p #{item.material_type}
           p #{item.style}
           p #{item.price}
+          button.btn( class="btn-primary ml-1", onclick= destination) Update
           //- button(type="button" onclick="inspect('#{item._id}')") Inspect
           //- button(type="button" onclick="update('#{item._id}')") Update
           //- button(type="button" onclick="remove('#{item._id}')") Delete
     //- button(type="button" onclick="addNew()") Add New Furniture
   script.
-    function buy(index) {
-    alert("You purchased item " + index);}
+    function dispatch(path){
+      window.location.href=path
+    }
