@@ -2,21 +2,30 @@ extends layout
 
 block content
   h1= title
-  - let results1= results
+  p Welcome to #{title}
+
+  - let create = `dispatch("/furnitures/create")`
+  button.btn(class="btn-primary ml-1", onclick=create) Create
+
+  - let item = results
+
   div(class="container-fluid")
     div(class="row m-1")
-      each item, index in results1  
-        - let destination = `dispatch(\"/furnitures/update?id=${item._id}\")`
-        div(class="col-sm-2",onclick=`buy(${index})`)
-          p #{item.material_type}
-          p #{item.style}
-          p #{item.price}
-          button.btn( class="btn-primary ml-1", onclick= destination) Update
-          //- button(type="button" onclick="inspect('#{item._id}')") Inspect
-          //- button(type="button" onclick="update('#{item._id}')") Update
-          //- button(type="button" onclick="remove('#{item._id}')") Delete
-    //- button(type="button" onclick="addNew()") Add New Furniture
+      each item, index in results
+        - let destination = `dispatch("/furnitures/update?id=${item._id}")`
+        - let detail = `dispatch("/furnitures/detail?id=${item._id}")`
+        - let remove = `dispatch("/furnitures/delete?id=${item._id}")`
+        div(class="col-sm-2")
+          ul
+            li #{item.material_type}
+            li #{item.style}
+            li #{item.price}
+
+        button.btn(class="btn-primary ml-1", onclick=destination) Update
+        button.btn(class="btn-danger ml-1", onclick=detail) Detail
+        button.btn(class="btn-primary ml-1", onclick=remove) Delete
+
   script.
-    function dispatch(path){
-      window.location.href=path
+    function dispatch(path) {
+      window.location.href = path;
     }
